@@ -22,10 +22,7 @@ if (!is.Nullish(i) && !is.Nullish(img)) {
 
   doc.body.prepend(note_dom)
 
-  console.log(doc.body.outerHTML)
-
   Deno.writeTextFile("./content/index.html", doc.body.outerHTML);
-  console.log("Done!");
 } else {
   throw Error("Got something error.");
 }
