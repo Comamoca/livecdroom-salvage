@@ -16,6 +16,13 @@ jobs:
       - run: |
           deno run -A ./main.ts
       - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pages
+          path: content
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: content
 
   deploy:
     needs: update
