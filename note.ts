@@ -1,6 +1,4 @@
-// Create note element
-
-import { DOMParser, Document } from "jsr:@b-fuze/deno-dom";
+import { Document } from "jsr:@b-fuze/deno-dom";
 
 export const note_dom = new Document().createElement("p")
 
