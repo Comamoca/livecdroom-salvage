@@ -1,6 +1,7 @@
-import { DOMParser } from "jsr:@b-fuze/deno-dom";
-import { is } from "jsr:@core/unknownutil";
+import { DOMParser, Document } from "jsr:@b-fuze/deno-dom";
+import { ensure, is } from "jsr:@core/unknownutil";
 import { note_dom } from "./note.ts";
+import { title as title_tag } from "./title.ts"
 
 // fetching HTML.
 const resp = await fetch("http://simosnet.com/livecdroom/");
@@ -22,7 +23,17 @@ if (!is.Nullish(i) && !is.Nullish(img)) {
 
   doc.body.prepend(note_dom)
 
-  Deno.writeTextFile("./content/index.html", doc.body.outerHTML);
+  // タイトルを変更
+  const title = doc.querySelector("title")
+
+  if (!is.Null(title)) {
+	  title.innerText = "陰謀論や政治思想を削除したLiveCDの部屋"
+  } else {
+	  // もしタイトルが存在しなかったら追加する
+	  doc.head.append(title_tag)
+  }
+
+  Deno.writeTextFile("./content/index.html", ensure(doc.documentElement?.outerHTML, is.String));
 } else {
   throw Error("Got something error.");
 }
